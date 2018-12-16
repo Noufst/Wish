@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Wish</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap4/bootstrap.min.css') }}">
+	<link href="{{ url_for('static', filename='plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='plugins/OwlCarousel2-2.2.1/animate.css') }}">
+	<link href="{{ url_for('static', filename='plugins/colorbox/colorbox.css') }}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/main_styles.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/responsive.css') }}">
+
+</head>
+<body>
+
+	<div class="super_container">
+
+		<!-- Header -->
+		{% include "header.html" %}
+
+		<!-- Home -->
+
+		<div class="home">
+
+			<!-- Home Slider -->
+
+			<div class="home_slider_container">
+				<div class="owl-carousel owl-theme home_slider">
+
+					<!-- Home Slider Item -->
+					<div class="owl-item">
+						<div class="home_slider_background" style="background-image:url({{ url_for('static', filename='images/slider_1.jpg') }})"></div>
+						<div class="home_slider_content">
+							<div class="home_slider_content_inner">
+								<div class="home_slider_subtitle">Promo Prices</div>
+								<div class="home_slider_title">New Collection</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Promo -->
+
+		<div class="promo">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="section_title_container text-center">
+							<div class="section_subtitle">Navigate through</div>
+							<div class="section_title">Categories</div>
+						</div>
+					</div>
+				</div>
+				<div class="row promo_container">
+
+					{% for category in categories %}
+					<!-- Promo Item -->
+					<div class="col-lg-4 promo_col">
+						<div class="promo_item">
+							<div class="promo_image">
+								<img src="{{ category.picture }}" alt="">
+							</div>
+							<div class="promo_link"><a href="{{url_for('showCatalogItems', category_name = category.name)}}">{{ category.name }}</a></div>
+						</div>
+					</div>
+					{% endfor %}
+
+				</div>
+			</div>
+		</div>
+
+		<!-- New Arrivals -->
+
+		<div class="arrivals">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="section_title_container text-center">
+							<div class="section_subtitle">only the best</div>
+							<div class="section_title">Latest Items</div>
+						</div>
+					</div>
+				</div>
+				<div class="row products_container">
+
+					{% for item in latestItems %}
+					<!-- Product -->
+					<div class="col-lg-4 product_col">
+						<div class="product">
+							<div class="product_image">
+								<img src="{{item.category.picture}}" alt="">
+							</div>
+							<div class="product_content clearfix">
+								<div class="product_info">
+									<div class="product_name"><a href="{{url_for('showItemDetails', category_name = item.category.name, item_name = item.name)}}">{{item.name}}</a></div>
+									<div class="product_price">{{item.category.name}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		{% include "footer.html" %}
+</div>
+		<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='styles/bootstrap4/popper.js') }}"></script>
+		<script src="{{ url_for('static', filename='styles/bootstrap4/bootstrap.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
+		<script src="{{ url_for('static', filename='plugins/easing/easing.js') }}"></script>
+		<script src="{{ url_for('static', filename='plugins/parallax-js-master/parallax.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='plugins/colorbox/jquery.colorbox-min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+	</body>
+	</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{{category.name}}</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Wish shop project">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap4/bootstrap.min.css') }}">
+	<link href="{{ url_for('static', filename='plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ url_for('static', filename='plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.css') }}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/categories.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/categories_responsive.css') }}">
+</head>
+<body>
+
+	<div class="super_container">
+
+		<!-- Header -->
+		{% include "header.html" %}
+
+		<!-- Home -->
+		<div class="home">
+			<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{category.picture}}" data-speed="0.8"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_container">
+							<div class="home_content">
+								<div class="home_title">{{category.name}}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="products">
+			<div class="container">
+				<!-- Products -->
+				<div class="sidebar_left clearfix">
+					<div class="sidebar_section">
+						<div class="sidebar_section_content">
+							<ul>
+								{% for item in items %}
+								<li><a href="{{url_for('showItemDetails', category_name = item.category.name, item_name = item.name)}}">{{item.name}}</a></li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Footer -->
+	{% include "footer.html" %}
+</div>
+<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='styles/bootstrap4/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='styles/bootstrap4/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/easing/easing.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/parallax-js-master/parallax.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/Isotope/isotope.pkgd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/malihu-custom-scrollbar/jquery.mCustomScrollbar.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>
+<script src="{{ url_for('static', filename='js/categories_custom.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Edit Item</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Wish shop project">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap4/bootstrap.min.css') }}">
+<link href="{{ url_for('static', filename='plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/checkout.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/checkout_responsive.css') }}">
+</head>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+	{% include "header.html" %}
+
+	<!-- Home -->
+
+	<div class="home">
+		<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ url_for('static', filename='images/slider_1.jpg') }}" data-speed="0.8"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="home_container">
+						<div class="home_content">
+							<div class="home_title">Edit Item</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Checkout -->
+
+	<div class="checkout">
+		<div class="container">
+			<div class="row">
+
+				<!-- Billing Details -->
+				<div class="col-lg-12">
+					<div class="cart_details">
+						<div class="checkout_form_container">
+							<form action="#" id="checkout_form" method="post">
+								<select name="categories" id="country" class="country_select checkout_input">
+                  {% for category in categories %}
+                  {% if category.id == item.category_id %}
+                  <option value= "{{category.id}}" selected>{{category.name}}</option>
+                  {% else %}
+                  <option value= "{{category.id}}">{{category.name}}</option>
+                  {% endif %}
+                  {% endfor %}
+								</select>
+								<input type="text" class="checkout_input" placeholder="{{ item.name }}" name="name">
+								<textarea name="description" id="checkout_comment" class="checkout_comment" placeholder="{{ item.description }}"></textarea>
+								<button class="cart_total_button col-md-2" type="submit">Edit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+{% include "footer.html" %}
+
+</div>
+
+<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='styles/bootstrap4/popper.js') }}"></script>
+<script src="{{ url_for('static', filename='styles/bootstrap4/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/easing/easing.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/parallax-js-master/parallax.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/checkout_custom.js') }}"></script>
+</body>
+</html>

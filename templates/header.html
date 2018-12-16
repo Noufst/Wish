@@ -1,0 +1,54 @@
+<header class="header">
+  <div class="header_inner d-flex flex-row align-items-center justify-content-start">
+    <div class="logo"><a href="{{url_for('showHomePage')}}">Wish</a></div>
+    <div class="header_content ml-auto">
+      <div class="burger_container d-flex flex-column align-items-center justify-content-around menu_mm"><div></div><div></div><div></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="menu d-flex flex-column align-items-end justify-content-start text-right menu_mm trans_400">
+  <div class="menu_close_container"><div class="menu_close"><div></div><div></div></div></div>
+  <div class="logo menu_mm"><a href="{{url_for('showHomePage')}}">Wish</a></div>
+  <nav class="menu_nav">
+    <ul class="menu_mm">
+      {% if 'username' not in session %}
+      <li class="menu_mm"><a href="{{ url_for('showLogin') }}">Login</a></li>
+      {% else %}
+      <li class="menu_mm">{{session['username']}}</li>
+      <li class="menu_mm"><a href="{{ url_for('addItem') }}">Add Item</a></li>
+      <li class="menu_mm"><a href="{{ url_for('gdisconnect') }}">Logout</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+
+<script>
+  function signInCallback(authResult) {
+    if (authResult['code']) {
+      // Hide the sign-in button now that the user is authorized
+      $('#signinButton').attr('style', 'display: none');
+      // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main page
+      $.ajax({
+        type: 'POST',
+        url: '/gconnect?state={{STATE}}',
+        processData: false,
+        data: authResult['code'],
+        contentType: 'application/octet-stream; charset=utf-8',
+        success: function(result) {
+          // Handle or verify the server response if necessary.
+          if (result) {
+            console.log('Login Successful!')
+            setTimeout(function() {
+              window.location.href = "/";
+            }, 4000);
+
+          } else if (authResult['error']) {
+            console.log('There was an error: ' + authResult['error']);
+          } else {
+            console.log('Failed to make a server-side call. Check your configuration and console.');
+          }
+        }
+
+      }); } }
+    </script>

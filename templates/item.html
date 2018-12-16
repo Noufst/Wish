@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{{item.name}}</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="Wish shop project">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/bootstrap4/bootstrap.min.css') }}">
+	<link href="{{ url_for('static', filename='plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/product.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/product_responsive.css') }}">
+</head>
+<body>
+
+	<div class="super_container">
+
+		<!-- Header -->
+		{% include "header.html" %}
+
+		<!-- Home -->
+
+		<div class="home">
+			<div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ category.picture }}" data-speed="0.8"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="home_container">
+							<div class="home_content">
+								<div class="home_title">{{ category.name }}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Product -->
+
+		<div class="product">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<div class="current_page">
+							<ul>
+								<li><a href="{{url_for('showCatalogItems', category_name = category.name)}}">{{ category.name }}</a></li>
+								<li>{{ item.name }}</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row product_row">
+
+					<!-- Product Content -->
+					<div class="col-lg-5">
+						<div class="product_content">
+							<div class="product_name">{{ item.name }}</div>
+							<div class="product_text">
+								<p>{{ item.description }}</p>
+							</div>
+							{% if isOwner %}
+							<div class="button cart_button"><a href="{{url_for('editItem', item_name = item.name)}}">Edit</a></div>
+							<div class="button cart_button"><a href="{{url_for('deleteItem', item_name = item.name)}}">Delete</a></div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		{% include "footer.html" %}
+</div>
+
+		<script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='styles/bootstrap4/popper.js') }}"></script>
+		<script src="{{ url_for('static', filename='styles/bootstrap4/bootstrap.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='plugins/easing/easing.js') }}"></script>
+		<script src="{{ url_for('static', filename='plugins/parallax-js-master/parallax.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/product_custom.js') }}"></script>
+	</body>
+	</html>
