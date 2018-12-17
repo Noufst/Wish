@@ -9,29 +9,78 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-* Vagrant
-* VirtualBox
+* [Vagrant](https://www.vagrantup.com)
+* [VirtualBox](https://www.virtualbox.org) - Virtual Machine
 
 
 ### Installing
 
-1. Install Vagrant and VirtualBox
-2. Clone this repository to vagrant shared directory
-3. Launch the Vagrant VM (vagrant up & vagrant ssh)
-4. Navigate to the repository folder
-5. Run the database setup:
+1. Install [Vagrant](https://www.vagrantup.com/downloads.html)
+2. Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+3. Download [FSND virtual machine](https://github.com/udacity/fullstack-nanodegree-vm)
+4. Clone this repository to vagrant shared directory
+5. In your terminal, navigate to FSND virtual machine folder then type the following commands:
+```
+cd vagrant
+vagrant up
+vagrant ssh
+cd /vagrant/Wish
+```
+6. Run the database setup:
 ```
 python database_setup.py
 ```
-6. Add some data:
+7. Add some data:
 ```
 python seeder.py
 ```
-7. Run the application
+8. Run the application
 ```
 python application.py
 ```
-8. Access and test the application by visiting http://localhost:5000 locally
+9. Access and test the application by visiting http://localhost:5000 locally
+
+## API endpoints
+* /catalog/json
+return all the data in the database (categories & items) in the following format:
+```
+{
+  categories:
+  [
+    {
+      id: ""
+      name: ""
+      items:
+      [
+        {
+          id: ""
+          title: ""
+          description: ""
+        }
+      ]
+    }
+  ]
+}
+```
+* /catalog/<string:category_name>/json
+return all the items for the given category in the following format:
+```
+{
+  category:
+    {
+      id: ""
+      name: ""
+      items:
+      [
+        {
+          id: ""
+          title: ""
+          description: ""
+        }
+      ]
+    }
+}
+```
 
 ## Built With
 
