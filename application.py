@@ -37,6 +37,9 @@ APPLICATION_NAME = "catalog"
 
 @app.route('/')
 @app.route('/catalog')
+## Description: This method query all the categories and the three latest added items.
+## Arguments: none.
+## Return: HTML page that shows all the categories and the three latest items.
 def showHomePage():
     categories = session.query(Category).all()
     latestItems = session.query(Item).order_by(desc(Item.dateAdded)).limit(3).all()
@@ -44,6 +47,12 @@ def showHomePage():
 
 
 @app.route('/catalog/add', methods=['GET','POST'])
+## Description: This method handles both GET and POST requests for adding
+## an item, it adds the item to the specified category from the POST request.
+## Arguments: none
+## Return:
+##  - GET request: HTML page that shows a form for adding the item.
+##  - POST request: HTML page that shows all items for specified category.
 def addItem():
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
@@ -61,6 +70,9 @@ def addItem():
 
 
 @app.route('/catalog/<string:category_name>/items')
+## Description: This method shows all items for a category.
+## Arguments: category name
+## Return: HTML page that shows all items for specified category.
 def showCatalogItems(category_name):
     category = session.query(Category).filter_by(name = category_name).first()
     items = session.query(Item).filter_by(category_id = category.id)
@@ -68,6 +80,9 @@ def showCatalogItems(category_name):
 
 
 @app.route('/catalog/<string:category_name>/<string:item_name>')
+## Description: This method shows item's details.
+## Arguments: category name and item name
+## Return: HTML page that shows all the informations of the specified item.
 def showItemDetails(category_name, item_name):
     category = session.query(Category).filter_by(name = category_name).first()
     item = session.query(Item).filter_by(name = item_name).first()
@@ -79,6 +94,12 @@ def showItemDetails(category_name, item_name):
 
 
 @app.route('/catalog/<string:item_name>/edit', methods=['GET','POST'])
+## Description: This method handles both GET and POST requests for editing
+## an item, it edits the item using the POST request.
+## Arguments: item name
+## Return:
+##  - GET request: HTML page that shows a form for editing the item.
+##  - POST request: HTML page that shows all items for the edited item's category.
 def editItem(item_name):
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
@@ -99,7 +120,14 @@ def editItem(item_name):
         categories = session.query(Category).all()
         return render_template('editItem.html', item= item, categories = categories)
 
+
 @app.route('/catalog/<string:item_name>/delete', methods=['GET','POST'])
+## Description: This method handles both GET and POST requests for deleting
+## an item, it deletes the item using the POST request.
+## Arguments: item name
+## Return:
+##  - GET request: HTML page that shows a confirmation message.
+##  - POST request: HTML page (home page) that shows all the categories and the three latest items.
 def deleteItem(item_name):
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
@@ -114,6 +142,9 @@ def deleteItem(item_name):
 
 
 @app.route('/catalog/json')
+## Description: This method is API endpoint of all the categories and its items in json format.
+## Arguments: no
+## Return: all the categories and its items in json format.
 def showCatalogJson():
     categories_dict = []
     categories = session.query(Category).all()
@@ -133,6 +164,9 @@ def showCatalogJson():
 
 # Login routes
 @app.route('/login')
+## Description: This method creates the login state variable and shows the login page.
+## Arguments: no
+## Return: HTML page that shows Google sign in button.
 def showLogin():
     # Create anti-forgery state token
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
@@ -140,6 +174,11 @@ def showLogin():
     return render_template('login.html', STATE=state)
 
 @app.route('/gconnect', methods=['POST'])
+## Description: This method handles Google sign in POST request.
+## Arguments: no
+## Return:
+##  - successful login: user's informations.
+##  - unsuccessful login: error message.
 def gconnect():
     # Validate state token
     if request.args.get('state') != login_session['state']:
@@ -230,6 +269,11 @@ def gconnect():
 
 
 @app.route('/gdisconnect')
+## Description: This method handles Google sign out.
+## Arguments: no
+## Return:
+##  - successful sign out: HTML page (home page) that shows all the categories and the three latest items.
+##  - unsuccessful sign out: error message.
 def gdisconnect():
     # Only disconnect a connected user.
     access_token = login_session.get('access_token')
@@ -261,6 +305,9 @@ def gdisconnect():
 
 
 # Helper Functions
+# Description: This method creates user object.
+# Arguments: login_session array.
+# Return: the new user's ID.
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
                    'email'], picture=login_session['picture'])
@@ -270,11 +317,17 @@ def createUser(login_session):
     return user.id
 
 
+# Description: This method query a user using the user's ID.
+# Arguments: user's ID.
+# Return: the user object.
 def getUserInfo(user_id):
     user = session.query(User).filter_by(id=user_id).one()
     return user
 
 
+# Description: This method query a user using the user's email.
+# Arguments: user's email.
+# Return: the user's ID.
 def getUserID(email):
     try:
         user = session.query(User).filter_by(email=email).one()
