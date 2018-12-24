@@ -47,7 +47,7 @@
 					<div class="cart_details">
 						<div class="checkout_form_container">
 							<form action="#" id="checkout_form" method="post">
-								<select name="categories" id="country" class="country_select checkout_input">
+								<select name="categories" id="country" class="country_select checkout_input" required>
                   {% for category in categories %}
                   {% if category.id == item.category_id %}
                   <option value= "{{category.id}}" selected>{{category.name}}</option>
@@ -56,7 +56,7 @@
                   {% endif %}
                   {% endfor %}
 								</select>
-								<input type="text" class="checkout_input" placeholder="{{ item.name }}" name="name">
+								<input type="text" class="checkout_input" placeholder="{{ item.name }}" name="name" required>
 								<textarea name="description" id="checkout_comment" class="checkout_comment" placeholder="{{ item.description }}"></textarea>
 								<button class="cart_total_button col-md-2" type="submit">Edit</button>
 							</form>
