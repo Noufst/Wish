@@ -36,6 +36,7 @@ APPLICATION_NAME = "catalog"
 
 
 @app.route('/')
+@app.route('/catalog')
 def showHomePage():
     categories = session.query(Category).all()
     latestItems = session.query(Item).order_by(desc(Item.dateAdded)).limit(3).all()
