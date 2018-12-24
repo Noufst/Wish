@@ -142,7 +142,7 @@ def deleteItem(item_name):
 
 
 @app.route('/catalog/json')
-## Description: This method is API endpoint of all the categories and its items in json format.
+## Description: This method is an API endpoint of all the categories and its items in json format.
 ## Arguments: no
 ## Return: all the categories and its items in json format.
 def showCatalogJson():
@@ -162,6 +162,25 @@ def showCatalogJson():
         categories_dict.append(category_dict)
     return jsonify(Category = categories_dict)
 
+@app.route('/catalog/<string:category_name>/json')
+## Description: This method is an API endpoint of all the items of the specified category in json format.
+## Arguments: category name
+## Return: all the items of the specified category in json format.
+def showItemsJson(category_name):
+
+    items_dict = []
+    category = session.query(Category).filter_by(name = category_name).first()
+    items = session.query(Item).filter_by(category_id = category.id).all()
+    for item in items:
+        item_dict = item.serialize
+        items_dict.append(item_dict)
+    category_dict = {
+    'id': category.id,
+    'name': category.name,
+    'items': items_dict
+    }
+    return jsonify(Category = category_dict)
+
 # Login routes
 @app.route('/login')
 ## Description: This method creates the login state variable and shows the login page.
@@ -172,6 +191,7 @@ def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
+
 
 @app.route('/gconnect', methods=['POST'])
 ## Description: This method handles Google sign in POST request.
